@@ -1,3 +1,3 @@
 export default function BaseHeader() {
-  return <header>base header</header>;
+  return <header>base header</header>
 }
