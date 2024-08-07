@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "prettier": "prettier --write ."
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepare": "simple-git-hooks"
   },
   "dependencies": {
     "next": "14.2.5",
@@ -15,13 +16,26 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.24.1",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@eslint-react/eslint-plugin": "^1.9.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.5",
+    "eslint": "^9.8.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "lint-staged": "^15.2.8",
     "postcss": "^8",
+    "simple-git-hooks": "^2.11.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "simple-git-hooks": {
+    "commit-msg": "pnpm commitlint --edit \"$1\"",
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint . --fix"
   }
 }
