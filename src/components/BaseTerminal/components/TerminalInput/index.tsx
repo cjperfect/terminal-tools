@@ -70,7 +70,7 @@ export function TerminalInput(props: TerminalInputProps) {
     terminalInputEl?.addEventListener('input', updateCaretPosition)
     terminalInputEl?.addEventListener('keydown', updateCaretPosition)
     terminalInputEl?.addEventListener('click', updateCaretPosition)
-    window.document.addEventListener('resize', updateCaretPosition)
+    window.addEventListener('resize', updateCaretPosition)
     const observer = new MutationObserver(updateCaretPosition)
     observer.observe(terminalInputEl?.parentNode || terminalInputEl, {
       childList: true,
@@ -83,7 +83,7 @@ export function TerminalInput(props: TerminalInputProps) {
       terminalInputEl?.removeEventListener('input', updateCaretPosition)
       terminalInputEl?.removeEventListener('keydown', updateCaretPosition)
       terminalInputEl?.removeEventListener('click', updateCaretPosition)
-      window.document.removeEventListener('resize', updateCaretPosition)
+      window.removeEventListener('resize', updateCaretPosition)
       observer.disconnect()
     }
   }, [])
