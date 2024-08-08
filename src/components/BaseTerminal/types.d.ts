@@ -1,5 +1,5 @@
 export interface ResultProps {
-  key: string;
-  cmd: string;
-  content: Record<string, any>;
+  key: string
+  cmd: string
+  content: Record<string, any>
 }

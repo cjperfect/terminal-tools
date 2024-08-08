@@ -7,4 +7,8 @@ export default antfu({
   ignores: [
     '**/public',
   ],
+  rules: {
+    'style/brace-style': 'off',
+    'react-hooks/exhaustive-deps': 'off',
+  },
 })

@@ -26,3 +26,35 @@ body {
     text-wrap: balance;
   }
 }
+
+@layer base {
+
+  .size-full{
+    @apply w-full h-full;
+  }
+
+
+  .terminal-input{
+    @apply outline-0 w-full h-auto text-sm caret-transparent text-neutral-950;
+  }
+  .terminal-input[data-empty='true']::after{
+    @apply inline-block;
+  }
+  .terminal-input::after{
+    @apply text-neutral-600 hidden;
+    content: 'Please input command or input help get help...';
+  }
+  .terminal-input-caret{
+    content: '';
+    width: 3px;
+    height: 1em;
+    animation: blink 1s step-end infinite;
+    pointer-events: none;
+    @apply absolute inline-block bg-green-900 rounded-xl;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+}
+

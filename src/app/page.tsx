@@ -1,10 +1,9 @@
-import BaseTerminal from "@/components/BaseTerminal";
+import BaseTerminal from '@/components/BaseTerminal'
 
 export default function Home() {
   return (
-    <main className="min-h-screen p-24">
-      <p>首页</p>
+    <main className="w-screen h-screen overflow-hidden flex justify-center">
       <BaseTerminal />
     </main>
-  );
+  )
 }
