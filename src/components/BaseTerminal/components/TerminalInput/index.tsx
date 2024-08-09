@@ -1,5 +1,6 @@
 'use client'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
+import { useInputCaret } from '@/hooks/useInputCaret'
 import { enterKeyboardCallback } from '@/utils/eventHelper'
 
 export interface TerminalInputProps {
@@ -10,41 +11,8 @@ export function TerminalInput(props: TerminalInputProps) {
   const { onEnter } = props
 
   const terminalInputRef = useRef<HTMLDivElement | null>(null)
+  const caretStyle = useInputCaret(terminalInputRef)
   const [isEmpty, setIsEmpty] = useState(true)
-  const [caretStyle, setCaretStyle] = useState([0, 0, false])
-
-  const caretStyleMemo = useMemo(() => {
-    return {
-      top: `${caretStyle[0]}px`,
-      left: `${caretStyle[1]}px`,
-      opacity: caretStyle[2] ? '1' : '0',
-    }
-  }, [caretStyle])
-
-  const terminalInputFocus = () => {
-    terminalInputRef.current?.focus()
-  }
-
-  const initCaretPosition = () => {
-    const terminalInputEl = terminalInputRef.current
-    if (terminalInputEl) {
-      const { top, left } = terminalInputEl.getBoundingClientRect()
-      setCaretStyle(() => [top, left, true])
-    }
-  }
-
-  const updateCaretPosition = () => {
-    const range = window.getSelection?.()?.getRangeAt(0)
-    if (!range) {
-      return
-    }
-    const rect = range.getBoundingClientRect()
-    if (rect.top === 0) {
-      initCaretPosition()
-      return
-    }
-    setCaretStyle(() => [rect.top + window.screenY - 24, rect.left + window.scrollX, true])
-  }
 
   const enterCallback = enterKeyboardCallback<HTMLDivElement>((e) => {
     if (e.shiftKey) {
@@ -56,37 +24,6 @@ export function TerminalInput(props: TerminalInputProps) {
     onEnter?.(value)
     e.currentTarget.textContent = ''
   })
-
-  useEffect(() => {
-    const terminalInputEl = terminalInputRef.current
-    if (!terminalInputEl) {
-      return
-    }
-    terminalInputFocus()
-    updateCaretPosition()
-    window.document.addEventListener('click', terminalInputFocus)
-    window.document.addEventListener('keydown', terminalInputFocus)
-
-    terminalInputEl?.addEventListener('input', updateCaretPosition)
-    terminalInputEl?.addEventListener('keydown', updateCaretPosition)
-    terminalInputEl?.addEventListener('click', updateCaretPosition)
-    window.addEventListener('resize', updateCaretPosition)
-    const observer = new MutationObserver(updateCaretPosition)
-    observer.observe(terminalInputEl?.parentNode || terminalInputEl, {
-      childList: true,
-      subtree: true,
-    })
-
-    return () => {
-      window.document.removeEventListener('click', terminalInputFocus)
-      window.document.removeEventListener('keydown', terminalInputFocus)
-      terminalInputEl?.removeEventListener('input', updateCaretPosition)
-      terminalInputEl?.removeEventListener('keydown', updateCaretPosition)
-      terminalInputEl?.removeEventListener('click', updateCaretPosition)
-      window.removeEventListener('resize', updateCaretPosition)
-      observer.disconnect()
-    }
-  }, [])
 
   return (
     <section className="w-full flex flex-col">
@@ -107,7 +44,7 @@ export function TerminalInput(props: TerminalInputProps) {
         }}
       >
       </div>
-      <span className="terminal-input-caret" style={caretStyleMemo} />
+      <span className="terminal-input-caret" style={caretStyle} />
     </section>
   )
 }
