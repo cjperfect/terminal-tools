@@ -1,0 +1,33 @@
+name: 自动部署
+
+on:
+  push:
+    branches:
+      - dev
+
+  release:
+    types:
+      - published
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检查分支
+        uses: actions/checkout@v2
+        with:
+          ref: dev
+
+      - name: 安装 Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "18.x"
+
+      - name: 安装依赖
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          pnpm install --save
+
+      - name: 打包项目
+        run: |
+          pnpm build
