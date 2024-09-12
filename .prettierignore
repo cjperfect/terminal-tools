@@ -1,6 +1,0 @@
-build/*
-dist/*
-public/*
-.next/*
-node_modules/*
-*.log
