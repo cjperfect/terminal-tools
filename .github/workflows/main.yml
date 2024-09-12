@@ -18,6 +18,9 @@ jobs:
         with:
           ref: dev
 
+      - name: Install Dependencies
+        run: bundle install
+
       - name: 安装 Node
         uses: actions/setup-node@v1
         with:
