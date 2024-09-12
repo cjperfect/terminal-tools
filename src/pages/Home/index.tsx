@@ -8,6 +8,7 @@ import { InputRefProps } from "./types";
 function Home() {
   const inputRef = useRef<InputRefProps>();
 
+  // 点击body自动聚焦输入框
   const handleTerBodyClick = () => {
     inputRef.current.focus();
   };
