@@ -22,17 +22,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "18.x"
-          
+
       - name: 安装pnpm
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          npm install pnpm -g
+        run: npm install pnpm -g
 
       - name: 安装依赖
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          pnpm install --save
+        run: pnpm install --save
 
       - name: 打包项目
-        run: |
-          pnpm build
+        run: pnpm build
