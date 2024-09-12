@@ -6,7 +6,7 @@ import { resolve } from "path";
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: "docs",
+    outDir: "./docs",
   },
   resolve: {
     extensions: [".ts", ".tsx"],
