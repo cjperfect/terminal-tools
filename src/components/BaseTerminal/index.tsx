@@ -1,30 +1,54 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { ResultProps } from './types'
 import OutputResult from './components/OutputResult'
 import { TerminalInput } from './components/TerminalInput'
+import { Command } from '@/libs/commands/command'
 
 export default function BaseTerminal() {
-  const [resultList, setResultList] = useState<ResultProps[]>([])
+  // const { history, execute } = useCommands()
 
-  const handleEnter = (content: string = '') => {
-    if (content.toLocaleLowerCase() === 'clear') {
-      setResultList([])
-    } else {
-      setResultList((pre) => {
-        return [
-          ...pre,
-          {
-            key: Math.random().toString(36).slice(2, 10),
-            cmd: content,
-            content: {
-              demo: 'null',
-            },
-          },
-        ]
-      })
-    }
+  const [resultList, _setResultList] = useState<ResultProps[]>([])
+
+  const handleEnter = async (_input: string = '') => {
+    // const _res = await execute(input)
   }
+
+  useEffect(() => {
+    const command = new Command('git')
+
+    command.description('code manage tool').version('0.0.1')
+
+    command
+      .option('-v,--version', 'Display command version')
+      .action(() => {
+        return {
+          type: 'custom',
+          struct: {
+
+          },
+        }
+      })
+
+    command
+      .subComamnd('status <file>', 'show file status')
+      .option('-p,--path', 'file path')
+      .action(() => {
+        return {
+          type: 'custom',
+          struct: {
+
+          },
+        }
+      })
+
+    // command.parse(['status', '--path=/usr/local', 'command.ts'])
+    command.parse(['--version', '--path=/usr/local', 'command.ts'])
+
+    return () => {
+
+    }
+  }, [])
 
   return (
     <div className="container flex justify-center items-center py-24">
@@ -32,13 +56,15 @@ export default function BaseTerminal() {
         <header className="p-3 border-b-2 border-b-zinc-50">
           header
         </header>
-        <main className="size-full overflow-y-auto p-3 flex flex-col gap-y-1">
-          {resultList.map(({ key, content }) => {
-            return <OutputResult key={key} content={content} />
-          })}
+        <div className="size-full flex gap-x-3">
+          <main className="size-full overflow-y-auto p-3 flex flex-col gap-y-1 flex-[4]">
+            {resultList.map(({ key, content }) => {
+              return <OutputResult key={key} content={content} />
+            })}
 
-          <TerminalInput onEnter={handleEnter} />
-        </main>
+            <TerminalInput onEnter={handleEnter} />
+          </main>
+        </div>
       </section>
     </div>
   )
