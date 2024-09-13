@@ -1,16 +1,31 @@
 import Mock from "mockjs";
-const Random = Mock.Random;
+const random = Mock.Random;
 
-const getList = Mock.mock("/api/getList", "get", (req, res) => {
-  const ret = Mock.mock({
-    username: "@cname",
-    age: Random.integer(60, 100),
-    ID: Random.id(),
-  });
-  return {
-    status: 200,
-    data: ret,
-  };
-});
-
-export { getList };
+export default [
+  {
+    url: "/api/getList",
+    method: "post",
+    response: () => {
+      return {
+        code: 200,
+        message: "success",
+        data: [random.cname(), random.cname(), random.cname()],
+      };
+    },
+  },
+  {
+    url: "/api/getJson",
+    method: "post",
+    response: () => {
+      return {
+        code: 200,
+        message: "success",
+        data: {
+          id: random.id(),
+          title: random.ctitle(),
+          content: random.csentence(),
+        },
+      };
+    },
+  },
+];

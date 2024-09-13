@@ -1,9 +1,11 @@
 import { useMemo } from "react";
 import Prefix from "../Prefix";
+import CodeHighlight from "../CodeHighlight";
 import { CMDHELP, SPLIT_CHAR } from "@/constants";
+import dayjs from "dayjs";
 
 const ResultItem: React.FC<CmdProps> = (props) => {
-  const { cmd, action } = props;
+  const { cmd, action, content } = props;
 
   const renderContent = useMemo(() => {
     if (action === "HELP") {
@@ -11,24 +13,39 @@ const ResultItem: React.FC<CmdProps> = (props) => {
         return CMDHELP.map((inst, index) => {
           const [text, tipText] = inst.split(SPLIT_CHAR);
           return (
-            <div key={index} className="flex items-center px-2">
+            <div
+              key={index}
+              className="flex items-center px-2 text-emerald-300"
+            >
               <span className="w-[50%]">{text}</span>
               <span>{tipText}</span>
             </div>
           );
         });
-      }
-
-      // 测试数据
-      if (cmd === "get list") {
+      } else {
+        if (!content)
+          return (
+            <span className="px-2 text-amber-300">
+              暂无此命令，请输如help查看已有命令
+            </span>
+          );
         return (
-          <pre>{JSON.stringify(["hello", "world", "good", "morning"])}</pre>
+          <div className="px-2">
+            <span className="text-purple-400">
+              时间：{dayjs().format("YYYY-MM-DD HH:mm:ss")}
+            </span>
+            <CodeHighlight
+              code={content}
+              language={"js"}
+              plugins={["line-numbers"]}
+            />
+          </div>
         );
       }
     }
 
     return null;
-  }, [action, cmd]);
+  }, [action, cmd, content]);
 
   return (
     <>

@@ -1,3 +1,8 @@
-import { atom } from "jotai";
+import { atomWithStorage, createJSONStorage } from "jotai/utils";
 
-export const resultAtom = atom<CmdProps[]>([]);
+const storage = createJSONStorage<CmdProps[]>(() => sessionStorage);
+export const resultAtom = atomWithStorage<CmdProps[]>(
+  "resultList",
+  [],
+  storage
+);

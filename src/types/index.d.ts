@@ -6,7 +6,8 @@ declare global {
     base: string; // 基础命令
     params: Record<string, any>; // 参数
     action: ActionType;
-    key: string;
+    content: any;
+    [extra: string]: any;
   }
 }
 

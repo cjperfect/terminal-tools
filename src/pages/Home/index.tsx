@@ -8,6 +8,8 @@ import { InputRefProps } from "./types";
 function Home() {
   const inputRef = useRef<InputRefProps>();
 
+  const terBodyRef = useRef<HTMLDivElement>();
+
   // 点击body自动聚焦输入框
   const handleTerBodyClick = () => {
     inputRef.current.focus();
@@ -23,8 +25,9 @@ function Home() {
         </div>
       </div>
       <div
-        className="bg-[#1e1e1e] px-5 py-5 h-[calc(100%_-_42px)] overflow-y-auto tracking-widest"
+        className="bg-[#1e1e1e] px-5 py-5 h-[calc(100%_-_42px)] overflow-y-auto tracking-widest scroll-smooth"
         onClick={handleTerBodyClick}
+        ref={terBodyRef}
       >
         <div className="flex items-center ">
           <Prefix />

@@ -8,7 +8,7 @@ const TerminalResult: React.FC<TerminalResultProps> = () => {
 
   return (
     <div>
-      {resultList.map(({ cmd, base, params, action, key }) => {
+      {resultList.map(({ cmd, base, params, action, key, content }) => {
         return (
           <ResultItem
             cmd={cmd}
@@ -16,6 +16,7 @@ const TerminalResult: React.FC<TerminalResultProps> = () => {
             base={base}
             params={params}
             key={key}
+            content={content}
           />
         );
       })}
