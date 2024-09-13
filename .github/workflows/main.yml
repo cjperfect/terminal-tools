@@ -29,9 +29,11 @@ jobs:
       - name: 打包项目
         run: npm run build
 
-      # 部署到 GitHub Pages
-      - name: 部署到github pages
-        uses: peaceiris/actions-gh-pages@v3
+      # 将构建后的文件部署到 gh-pages 分支
+      - name: 部署到githubpage
+        uses: crazy-max/ghaction-github-pages@v3
         with:
-          github_token: ${{ secrets.GITHUBTOKEN }}
-          publish_dir: ./docs
+          target_branch: preview
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUBTOKEN }}
