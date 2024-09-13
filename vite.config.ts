@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [
     react(),
     viteMockServe({
-      mockPath: "mock",
+      mockPath: "api",
       enable: true,
     }),
   ],
@@ -23,5 +23,10 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ["xtend"],
+  },
+  server: {
+    proxy: {
+      "/api": "http://localhost:4000", // 仅在开发环境下生效
+    },
   },
 });

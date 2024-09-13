@@ -4,8 +4,8 @@ import { TerminalInputProps } from "./types";
 import { useAtom } from "jotai";
 import { resultAtom } from "@/store";
 import ParseUtil from "@/utils/parseUtil";
-import { getList } from "@/api/list";
-import { getJson } from "@/api/json";
+import { getList } from "@/services/list";
+import { getJson } from "@/services/json";
 import { CMDHELP } from "@/constants";
 
 function TerminalInput(props: TerminalInputProps) {
