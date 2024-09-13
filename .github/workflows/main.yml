@@ -19,15 +19,19 @@ jobs:
           ref: dev
 
       - name: 安装 Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: "18.x"
 
-      - name: 安装pnpm
-        run: npm install pnpm -g
-
       - name: 安装依赖
-        run: pnpm install --save
+        run: npm install --save
 
       - name: 打包项目
-        run: pnpm build
+        run: npm run build
+
+      # 部署到 GitHub Pages
+      - name: 部署到github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
