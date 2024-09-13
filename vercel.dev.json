@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/mock/(.*)",
+      "destination": "/mock/$1"
+    }
+  ]
+}

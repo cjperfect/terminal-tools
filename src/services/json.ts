@@ -1,5 +1,5 @@
 import ajax from "@/utils/ajax";
 
 export const getJson = (data?: any) => {
-  return ajax.post("/getJson", data);
+  return ajax.get("/getJson", data);
 };

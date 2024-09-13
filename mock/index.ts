@@ -4,7 +4,7 @@ const random = Mock.Random;
 export default [
   {
     url: "/api/getList",
-    method: "post",
+    method: "get",
     response: () => {
       return {
         code: 200,
@@ -15,7 +15,7 @@ export default [
   },
   {
     url: "/api/getJson",
-    method: "post",
+    method: "get",
     response: () => {
       return {
         code: 200,
