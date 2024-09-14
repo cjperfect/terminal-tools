@@ -28,7 +28,10 @@ function TerminalInput(props: TerminalInputProps) {
     []
   );
 
-  const getData = async (obj: Omit<CmdProps, "key">) => {
+  const getData = async (
+    obj: Omit<CmdProps, "key">,
+    target: HTMLInputElement
+  ) => {
     const { cmd, base, params, action } = obj;
 
     const map = {
@@ -56,6 +59,8 @@ function TerminalInput(props: TerminalInputProps) {
     setResultList((prev) => {
       return [...prev, newItem];
     });
+
+    target.value = "";
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -64,9 +69,7 @@ function TerminalInput(props: TerminalInputProps) {
 
     if (e.key === "Enter" && value) {
       const parseRes = ParseUtil.parse(value);
-      getData(parseRes);
-      target.value = "";
-      // 内容区域，自动滚动到最底部
+      getData(parseRes, target);
     }
   };
 
