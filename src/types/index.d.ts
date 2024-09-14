@@ -1,13 +1,9 @@
-export type ActionType = "HELP" | "CODE";
-
 declare global {
-  interface CmdProps {
-    cmd: string; // 输入整条命令
-    base: string; // 基础命令
-    params: Record<string, any>; // 参数
-    action: ActionType;
-    content: any;
-    [extra: string]: any;
+  interface CommandProps {
+    input: string; // 整条命令
+    command: string; // 基础命令 cd
+    params: string[]; // 命令参数 cd  /home/usr   /home/usr就是参数
+    options: string[]; // 命令选项 --help -h
   }
 }
 

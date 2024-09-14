@@ -3,10 +3,7 @@ import Prefix from "@/components/Prefix";
 import { TerminalInputProps } from "./types";
 import { useAtom } from "jotai";
 import { resultAtom } from "@/store";
-import ParseUtil from "@/utils/parseUtil";
-import { getList } from "@/services/list";
-import { getJson } from "@/services/json";
-import { CMDHELP } from "@/constants";
+import ParseCommand from "@/utils/parseCommand";
 
 function TerminalInput(props: TerminalInputProps) {
   const { inputRef } = props;
@@ -28,48 +25,13 @@ function TerminalInput(props: TerminalInputProps) {
     []
   );
 
-  const getData = async (
-    obj: Omit<CmdProps, "key">,
-    target: HTMLInputElement
-  ) => {
-    const { cmd, base, params, action } = obj;
-
-    const map = {
-      "get list": getList,
-      "get json": getJson,
-      help: CMDHELP,
-    };
-
-    const newItem: CmdProps = {
-      cmd,
-      base,
-      params,
-      action,
-      key: +new Date() + "",
-      content: null,
-    };
-
-    if (typeof map[cmd] === "function") {
-      const { data } = await map[cmd](params);
-      newItem.content = JSON.stringify(data, null, 2);
-    } else {
-      if (!map[cmd]) newItem.content = map[cmd];
-    }
-
-    setResultList((prev) => {
-      return [...prev, newItem];
-    });
-
-    target.value = "";
-  };
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
     const value = target.value.trim();
 
     if (e.key === "Enter" && value) {
-      const parseRes = ParseUtil.parse(value);
-      getData(parseRes, target);
+      const parseCommand = new ParseCommand(value);
+      console.log(parseCommand.parse());
     }
   };
 
